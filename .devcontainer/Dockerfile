@@ -25,27 +25,25 @@ ENV DOCKER_BUILDKIT=1
 
 USER codespace
 
-COPY --from=seanly/toolset:krew /root/.krew ~/.krew
-ENV PATH="${PATH}:~/.krew/bin"
+COPY --from=seanly/toolset:krew --chown=codespace:codespace /root/.krew /codespace/.krew
+ENV PATH="${PATH}:/codespace/.krew/bin"
 
 RUN set -eux \
-  ; mkdir -p ~/.oh-my-zsh/custom/plugins \
   ; git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git  ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
   ; git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
   ; git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search \
-  ; git clone --depth 1 https://github.com/Dbz/kube-aliases.git ~/.oh-my-zsh/custom/plugins/kube-aliases
+  ; git clone --depth 1 https://github.com/Dbz/kube-aliases.git ~/.oh-my-zsh/custom/plugins/kube-aliases \
+  ; sed -i 's;=(git);=(git zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting kube-aliases kube-ps1);g' ~/.zshrc \
+  ;echo "PROMPT='\$(kube_ps1)'\$PROMPT" >> ~/.zshrc \
+  ;mkdir -p ~/.kube 
 
 # vimrc
 COPY --from=seanly/toolset:vimrc /package/vim/init.vim ~/.vimrc
 RUN curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
-    ;mkdir -p ~/.config/nvim; ln -s ~/.vimrc ~/.config/nvim/init.vim\
-    ;sed -i 's;=(git);=(git zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting kube-aliases kube-ps1);g' ~/.zshrc \
+    ;mkdir -p ~/.config/nvim; ln -s ~/.vimrc ~/.config/nvim/init.vim \
     ;echo "alias vim=nvim" >> ~/.zshrc \
     ;echo "alias k=kubectl" >> ~/.zshrc \
-    ;echo "alias vi=nvim" >> ~/.zshrc \
-    ;echo "PROMPT='\$(kube_ps1)'\$PROMPT" >> ~/.zshrc \
-    # fix kubectx error: /root/.krew/bin/kubectl-ctx: line 106: /root/.kube/kubectx: No such file or directory
-    ;mkdir -p ~/.kube 
+    ;echo "alias vi=nvim" >> ~/.zshrc
 
 ENV SHELL=/bin/zsh

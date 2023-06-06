@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mysql-5.7.35:
+    build:
+      context: .
+      args:
+        VARIANT: 5.7.35
+    image: seanly/mysql:5.7.35-extra
+    restart: unless-stopped
+    tty: true
+    entrypoint: /bin/bash
+  mysql-5.7.42-debian:
+    build:
+      context: .
+      args:
+        VARIANT: 5.7.42-debian
+    image: seanly/mysql:5.7.42-debian-extra
+    restart: unless-stopped
+    tty: true
+    entrypoint: /bin/bash
