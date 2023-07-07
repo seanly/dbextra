@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  pgloader:
+    image: seanly/toolset:pgloader
+    tty: true
+    volumes:
+      - ./:/ws
+    restart: always
+    security_opt:
+      - seccomp:unconfined
+  mysql:
+    image: seanly/dbextra:mysql-5.7.35
+    restart: unless-stopped
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./:/ws
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: 'gitlabhq_production'
+    healthcheck:
+      test: mysql --user=root --password=$$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES;"
+      interval: 3s
+      timeout: 1s
+      retries: 5
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --max_allowed_packet=512M
+
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=gitlab
+      - POSTGRES_PASSWORD=gitlab123
+      - POSTGRES_DB=gitlabhq_production
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+networks:
+  default:
+    name: opsbox-network
+    external: true
+volumes:
+    postgres-data:
+    mysql-data:

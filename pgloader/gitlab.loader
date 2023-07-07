@@ -1,0 +1,11 @@
+LOAD DATABASE
+ FROM mysql://root:root123@mysql:3306/gitlabhq_production
+ INTO pgsql://gitlab:gitlab123@postgres:5432/gitlabhq_production
+
+ WITH include drop, create tables, create indexes, workers = 32, concurrency = 16,
+     batch rows = 100000, batch size = 512MB, multiple readers per thread, rows per range = 50000
+
+ CAST type datetime to timestamp drop default drop not null using zero-dates-to-null
+
+ ALTER SCHEMA 'gitlabhq_production_backup' RENAME TO 'public'
+;
