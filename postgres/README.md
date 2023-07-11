@@ -4,7 +4,7 @@
 
 ```bash
 docker-compose exec postgres bash
-psql -U gitlab gitlabhq_production_backup
+psql -U gitlab gitlabhq_production
 SELECT pg_size_pretty(pg_database_size(current_database())) AS database_size;
 ```
 
