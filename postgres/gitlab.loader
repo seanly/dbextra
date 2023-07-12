@@ -1,13 +1,17 @@
 LOAD DATABASE
- FROM mysql://root:root123@mysql:3306/gitlabhq_production
- INTO pgsql://gitlab:gitlab123@postgres:5432/gitlabhq_production
+     FROM mysql://root:root123@mysql:3306/gitlabhq_production
+     INTO pgsql://gitlab:gitlab123@postgres:5432/gitlabhq_production
 
-WITH include no drop, truncate, disable triggers, create tables,
+WITH include no drop, truncate, disable triggers, create no tables,
      create no indexes, preserve index names, no foreign keys,
+     data only,
      workers = 8, concurrency = 16,
      batch rows = 100000, batch size = 512MB, multiple readers per thread, rows per range = 500000
 
- CAST type datetime to timestamp drop default drop not null using zero-dates-to-null
+SET MySQL PARAMETERS
+net_read_timeout = '90',
+net_write_timeout = '180'
 
- ALTER SCHEMA 'gitlabhq_production' RENAME TO 'public'
+ALTER SCHEMA 'gitlabhq_production' RENAME TO 'public'
+
 ;
