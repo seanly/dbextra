@@ -8,7 +8,7 @@ ENV XTRABACKUP_URL=https://repo.percona.com/apt/pool/main/p/percona-release/perc
 RUN set -eux \
     ; echo 'Acquire::AllowInsecureRepositories "true";' >> /etc/apt/apt.conf.d/insecure-repo \
     ; echo 'Acquire::AllowDowngradeToInsecureRepositories "true";' >> /etc/apt/apt.conf.d/insecure-repo \
-    ; apt update -y && apt install wget lsb-release curl -y
+    ; apt update -y && apt install wget lsb-release curl procps net-tools telnet -y
 
 RUN set -eux \
     ;curl -sL $XTRABACKUP_URL > /tmp/all.deb && \
