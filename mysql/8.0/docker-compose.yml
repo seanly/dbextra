@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mysql-8.0.33-debian:
+    build:
+      context: ./
+      args:
+        VARIANT: 8.0.33-debian
+    image: seanly/dbextra:mysql-8.0.33
+    restart: unless-stopped
+    tty: true
+    entrypoint: /bin/bash

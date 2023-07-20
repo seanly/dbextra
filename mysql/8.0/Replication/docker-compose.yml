@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mysql01:
+    container_name: mysql01
+    image: seanly/dbextra:mysql-8.0.33
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      TZ: Asia/Shanghai
+      MYSQL_INITDB_SKIP_TZINFO: "Asia/Shanghai"
+      MYSQL_USER: "test"
+      MYSQL_PASSWORD: "Abc123654"
+    volumes:
+      - ./etc/mysql/:/etc/mysql/conf.d
+      - .data/mysql01:/var/lib/mysql
+    ports:
+      - 3306:3306
+    command:
+      - --server-id=1
+    healthcheck:
+      test: mysql --user=root --password=$$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES;"
+      interval: 3s
+      timeout: 1s
+      retries: 5
+  mysql02:
+    container_name: mysql02
+    image: seanly/dbextra:mysql-8.0.33
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      TZ: Asia/Shanghai
+    volumes:
+      - ./etc/mysql/:/etc/mysql/conf.d
+      - .data/mysql02:/var/lib/mysql
+    ports:
+      - 3307:3306
+    command:
+      - --server-id=2
+    healthcheck:
+      test: mysql --user=root --password=$$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES;"
+      interval: 3s
+      timeout: 1s
+      retries: 5
+
+networks:
+  default:
+    name: opsbox-network
+    external: true
