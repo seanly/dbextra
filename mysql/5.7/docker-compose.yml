@@ -2,7 +2,7 @@ version: '3'
 services:
   mysql-5.7.35:
     build:
-      context: ./5.7
+      context: .
       args:
         VARIANT: 5.7.35
     image: seanly/dbextra:mysql-5.7.35
@@ -11,7 +11,7 @@ services:
     entrypoint: /bin/bash
   mysql-5.7.42-debian:
     build:
-      context: ./5.7
+      context: ./
       args:
         VARIANT: 5.7.42-debian
     image: seanly/dbextra:mysql-5.7.42
