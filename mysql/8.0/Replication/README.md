@@ -86,7 +86,7 @@ mysqlbinlog  -R --host=10.0.0.52 --user=mha --password=mha --raw  --stop-never m
 # master Node
 
 # create myrepl user
-GRANT REPLICATION SLAVE ON *.* TO "myrepl"@"%" IDENTIFIED BY "lperym";
+GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO "myrepl"@"%" IDENTIFIED BY "lperym";
 FLUSH PRIVILEGES;
 
 # show master status
@@ -100,6 +100,16 @@ CHANGE MASTER TO MASTER_HOST='<mysql-ip>', MASTER_USER='myrepl', MASTER_PASSWORD
 START REPLICA;
 
 ```
+
+使用 GTID模式 
+
+```bash
+
+CHANGE MASTER TO MASTER_HOST='<mysql-ip>', MASTER_USER='myrepl', MASTER_PASSWORD='lperym', MASTER_AUTO_POSITION =1 ;
+START REPLICA;
+
+```
+
 
 ### 新增主从场景
 
@@ -151,6 +161,15 @@ xtrabackup --backup --compress --target-dir=$dest/incrementals/$today --incremen
 
 # 如果备份被压缩，再回复是需要解压，全量备份和增量备份命令相同
 xtrabackup --decompress --target-dir=/path/to/compress/data/
+```
+
+
+
+```sql
+# 创建备份用户
+CREATE USER 'bakusr'@'127.0.0.1' identified by 'bakusr123';
+GRANT SELECT,LOCK TABLES,SHOW VIEW,TRIGGER,EVENT,RELOAD,LOCK TABLES,BACKUP_ADMIN,PROCESS,REPLICATION CLIENT ON *.* TO 'bakusr'@'127.0.0.1';
+FLUSH PRIVILEGES; 
 ```
 
 ### 恢复
