@@ -1,5 +1,10 @@
 # MySQL Replication
 
+## 插件加载方式
+
+- stage1: 注释 plugin 配置，启动（初始化阶段）
+- stage2: 停止容器
+- stage3: 开启 plugin 配置，启动（正常服务）
 
 ## 配置文件
 
@@ -76,7 +81,6 @@ set sql_log_bin=0;
 mysqlbinlog  -R --host=10.0.0.52 --user=mha --password=mha --raw  --stop-never mysql-bin.000003 
 
 ```
-
 
 ## 主从配置
 
