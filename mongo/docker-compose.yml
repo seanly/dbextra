@@ -11,6 +11,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mongo
+    volumes:
+      - mongo-data:/data/db
+
   mongo-express:
     image: mongo-express
     restart: always
@@ -22,3 +25,6 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:mongo@mongo:27017/
       ME_CONFIG_BASICAUTH_USERNAME: "admin"
       ME_CONFIG_BASICAUTH_PASSWORD: "mongo"
+
+volumes:
+  mongo-data:
