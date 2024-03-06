@@ -1,0 +1,2 @@
+ARG VERSION=5.0.17
+FROM mongo:5.0.17-focal
