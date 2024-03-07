@@ -26,5 +26,11 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: "admin"
       ME_CONFIG_BASICAUTH_PASSWORD: "mongo"
 
+
+networks:
+  default:
+    name: opsbox-network
+    external: true
+
 volumes:
   mongo-data:

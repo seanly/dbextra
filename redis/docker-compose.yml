@@ -14,5 +14,11 @@ services:
       - TZ=Asia/Shanghai
     command: redis-server --requirepass redis@root --appendonly yes --protected-mode no --tcp-backlog "20480"
 
+
+networks:
+  default:
+    name: opsbox-network
+    external: true
+
 volumes:
   redis-data:
