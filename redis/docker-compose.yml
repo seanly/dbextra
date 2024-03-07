@@ -1,0 +1,18 @@
+version: '3'
+services:
+  redis:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+        VERSION: 6.2.6
+    image: seanly/dbset:redis-6.2.6
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data    
+    environment:
+      - TZ=Asia/Shanghai
+    command: redis-server --requirepass redis@root --appendonly yes --protected-mode no --tcp-backlog "20480"
+
+volumes:
+  redis-data:
