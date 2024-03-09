@@ -2,7 +2,7 @@ version: '3'
 services:
   mysql01:
     container_name: mysql01
-    image: seanly/dbextra:mysql-5.7.35
+    image: seanly/dbset:mysql-5.7.35
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root123
@@ -21,7 +21,7 @@ services:
       retries: 5
   mysql02:
     container_name: mysql02
-    image: seanly/dbextra:mysql-5.7.35
+    image: seanly/dbset:mysql-5.7.35
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root123

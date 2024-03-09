@@ -3,20 +3,23 @@ services:
   mysql-8.0.33-debian:
     build:
       context: ./
-      dockerfile: ./Dockerfile.debian
+      dockerfile: ./Dockerfile
       args:
         VARIANT: 8.0.33
-    image: seanly/dbextra:mysql-8.0.33-debian
+      target: debian
+    image: seanly/dbset:mysql-8.0.33-debian
     restart: unless-stopped
     tty: true
     entrypoint: /bin/bash
-  mysql-8.0.33-oracle:
+
+  mysql-8.0.33:
     build:
       context: ./
-      dockerfile: ./Dockerfile.oracle
+      dockerfile: ./Dockerfile
       args:
         VARIANT: 8.0.33
-    image: seanly/dbextra:mysql-8.0.33-oracle
+      target: oracle
+    image: seanly/dbset:mysql-8.0.33
     restart: unless-stopped
     tty: true
     entrypoint: /bin/bash
