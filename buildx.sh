@@ -28,19 +28,21 @@ function docker_buildx_svc() {
     for _build_arg in ${_build_args}
     do
       _arg_str=$(echo ${_build_arg}|sed -e 's/: /=/')
+  echo "--------${_arg_str}"
       _buildx_build_args="${_buildx_build_args} --build-arg ${_arg_str}"
     done
   fi
 
   if [ "x${_build_target}" != "xnull" ]; then
-    _buildx_build_args="--target ${_build_target}"
+    _buildx_build_args="${_buildx_build_args} --target ${_build_target}"
   fi
 
   if [ "x${_dockerfile}" != "xnull" ]; then
-    _buildx_build_args="-f ${_dockerfile}"
+    _buildx_build_args="${_buildx_build_args} -f ${_dockerfile}"
   fi
 
   IFS=' ' read -ra _buildx_build_args_arr <<< "$_buildx_build_args"
+
 
   docker buildx build --platform linux/amd64,linux/arm64 -t ${_image} ${_context} --push --pull --progress=plain ${_buildx_build_args_arr[@]} ${_build_opts}
 }
