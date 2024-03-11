@@ -5,9 +5,9 @@ services:
       context: ./
       dockerfile: ./Dockerfile
       args:
-        VERSION: 7.8.1
+        VERSION: 7.7.1
       target: elasticsearch
-    image: seanly/dbset:elasticsearch-7.8.1
+    image: seanly/dbset:elasticsearch-7.7.1
     container_name: elasticsearch
     restart: unless-stopped
     environment:
@@ -28,9 +28,9 @@ services:
       context: ./
       dockerfile: ./Dockerfile
       args:
-        VERSION: 7.8.1
+        VERSION: 7.7.1
       target: kibana
-    image: seanly/dbset:kibana-7.8.1
+    image: seanly/dbset:kibana-7.7.1
     container_name: kibana
     restart: always
     ports:
