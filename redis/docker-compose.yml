@@ -5,8 +5,8 @@ services:
       context: ./
       dockerfile: ./Dockerfile
       args:
-        VERSION: 6.2.6
-    image: seanly/dbset:redis-6.2.6
+        VERSION: 6.2.14
+    image: seanly/dbset:redis-6.2.14
     restart: unless-stopped
     volumes:
       - redis-data:/data    
