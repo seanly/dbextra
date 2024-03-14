@@ -40,6 +40,17 @@ services:
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: "admin123"
 
+  logstash:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+        VERSION: 7.7.1
+      target: logstash
+    image: seanly/dbset:logstash-7.7.1
+    container_name: logstash
+    restart: always
+
 networks:
   default:
     name: opsbox-network
