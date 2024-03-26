@@ -1,18 +1,18 @@
 # MySQL Replication
 
-
 ## 配置文件
 
 配置分为 session （可以省略） 和 global 级别
 
-```
+```sql
 show VARIABLES like '%max_allowed_packet%';
 ```
 
 ## binlog 相关操作
 
 ### sql 相关指令
-```
+
+```sql
 # 是否启用binlog日志
 show variables like 'log_bin';
 
@@ -76,7 +76,6 @@ set sql_log_bin=0;
 mysqlbinlog  -R --host=10.0.0.52 --user=mha --password=mha --raw  --stop-never mysql-bin.000003 
 
 ```
-
 
 ## 主从配置
 
