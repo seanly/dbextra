@@ -1,5 +1,5 @@
-ARG VARIANT=8.0.33
-FROM mysql:${VARIANT}-debian as debian
+ARG VERSION=8.0.33
+FROM mysql:${VERSION}-debian as debian
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV XTRABACKUP_MAJOR=80
@@ -16,5 +16,4 @@ RUN set -eux \
     apt update -y && \
     apt install percona-xtrabackup-dbg-${XTRABACKUP_MAJOR} qpress -y
 
-
-FROM mysql:${VARIANT}-oracle as oracle
+FROM mysql:${VERSION}-oracle as oracle

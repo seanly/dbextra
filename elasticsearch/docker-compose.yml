@@ -40,7 +40,6 @@ services:
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: "admin123"
 
-
   logstash:
     build:
       context: ./
