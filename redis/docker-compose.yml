@@ -1,11 +1,6 @@
 version: '3'
 services:
   redis:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-      args:
-        VERSION: 6.2.14
     image: seanly/dbset:redis-6.2.14
     restart: unless-stopped
     volumes:

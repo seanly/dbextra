@@ -4,3 +4,13 @@ image:
 tasks:
 - name: docker create network
   command: docker network create opsbox-network 
+- name: docker create builder
+  command: |
+    BUILDER_NAME=opsbox
+    if ! $(docker buildx ls |grep -q ${BUILDER_NAME}); then
+      docker buildx create --name ${BUILDER_NAME} --use --bootstrap
+    fi
+
+vscode:
+  extensions:
+    - hashicorp.hcl
